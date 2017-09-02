@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Library.UserControl_Students"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Library"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="875" Background="White" MinHeight="550" MinWidth="875">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Student ID" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top" Height="26" Width="66" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="textStudentID" HorizontalAlignment="Left" Height="26" Margin="97,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center"/>
+        <Label Content="First Name" HorizontalAlignment="Left" Margin="25,41,0,0" VerticalAlignment="Top" Height="26" Width="67" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="textFirstName" HorizontalAlignment="Left" Height="26" Margin="97,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center"/>
+        <Label Content="Last Name" HorizontalAlignment="Left" Margin="26,72,0,0" VerticalAlignment="Top" Height="26" Width="66" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="textLastName" HorizontalAlignment="Left" Height="26" Margin="97,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center"/>
+        <Label Content="Middle Name" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Height="26" Width="82" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="textMiddleName" HorizontalAlignment="Left" Height="26" Margin="97,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center"/>
+        <Label Content="Grade Level" HorizontalAlignment="Left" Margin="20,134,0,0" VerticalAlignment="Top" Height="26" Width="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="comboGrade" HorizontalAlignment="Left" Margin="97,134,0,0" VerticalAlignment="Top" Width="150" Height="26"/>
+        <Button x:Name="buttonSearchAdd" Content="Search / Add" HorizontalAlignment="Left" Margin="97,165,0,0" VerticalAlignment="Top" Width="150" Height="20" Click="buttonSearchAdd_Click"/>
+        <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="97,190,0,0" VerticalAlignment="Top" Width="150" Height="20" Click="buttonClear_Click"/>
+
+        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" SelectionChanged="dg_SelectionChanged" IsReadOnly="True" />
+    </Grid>
+</UserControl>
