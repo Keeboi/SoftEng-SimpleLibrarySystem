@@ -30,7 +30,7 @@ namespace Library
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                return true; //FAILED CONNECTION
+                return false; //FAILED CONNECTION
             }
         }
         public bool closeConnection()

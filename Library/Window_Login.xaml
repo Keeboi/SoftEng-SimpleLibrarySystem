@@ -18,7 +18,7 @@
         <TextBox x:Name="textUsername" HorizontalAlignment="Left" Height="26" Margin="78,10,0,0" TextWrapping="Wrap" Text="admin" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <PasswordBox x:Name="textPassword" HorizontalAlignment="Left" Margin="78,41,0,0" VerticalAlignment="Top" Width="194" Height="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Password="admin"/>
         <Button x:Name="buttonLogin" Content="Login" HorizontalAlignment="Left" Margin="179,72,0,0" VerticalAlignment="Top" Width="93" Click="buttonLogin_Click"/>
-        <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="78,72,0,0" VerticalAlignment="Top" Width="96"/>
+        <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="78,72,0,0" VerticalAlignment="Top" Width="96" Click="buttonClear_Click"/>
 
     </Grid>
 </Window>

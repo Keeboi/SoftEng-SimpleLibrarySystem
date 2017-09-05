@@ -8,15 +8,17 @@ namespace Library.Queries
 {
     class QueryReturn
     {
-        public static System.Data.DataTable getBooks(params string[] inputs)
+        public static List<Models.BorrowedItem> returned;
+
+        public static List<Models.BorrowedItem> getBooks(params string[] inputs)
         {
             SqlConnector sql = new SqlConnector("localhost", 3306, "root", "", "db_library");
             sql.openConnection();
-            string query = String.Format("select tblbooks.book_id as \"Book ID\", tblbooks.title as \"Book Title\", " +
+            string query = String.Format("select tblbooks.book_id as \"BookId\", tblbooks.title as \"Book Title\", " +
                 "concat(tblstudents.student_fname, \" \", tblstudents.student_lname) as \"Student\" , " +
-                "tblstudents.student_id as \"Student ID\", " +
-                "date_borrowed as \"Date Borrowed\", " +
-                "date_fined as \"Date to be Fined\" " +
+                "tblstudents.student_id as \"StudentId\", " +
+                "date_borrowed as \"DateBorrowed\", " +
+                "date_fined as \"DateToBeFined\" " +
                 " from tblborrowedbooks " +
                 " join tblbooks on " +
                 " tblborrowedbooks.book_id = tblbooks.book_id " +
@@ -26,7 +28,11 @@ namespace Library.Queries
                 " tblborrowedbooks.book_id like '{0}%' and " +
                 " tblstudents.student_id like '{1}%'" +
                 " order by tblbooks.book_id asc;", inputs[0], inputs[1]);
-            return sql.getData(query);
+            System.Data.DataTable dt = sql.getData(query);
+            List<Models.BorrowedItem> borrowedItems = Models.DataToList.TransformTableToList<Models.BorrowedItem>(dt);
+            returned = borrowedItems;
+            QueryFines.increaseFines(returned);
+            return borrowedItems;
         }
         public static void returnBook(params string[] inputs)
         {

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -26,7 +27,7 @@ namespace Library
                 textLastName.Text,
                 comboGrade.Text
             };
-            DataTable dt = Queries.QueryStudent.getStudents(text);
+            /*DataTable dt = Queries.QueryStudent.getStudents(text);
             if (dt != null) // table is a DataTable
             {
                 foreach (DataColumn col in dt.Columns)
@@ -40,8 +41,9 @@ namespace Library
                 }
 
                 dg.DataContext = dt;
-            }
-            
+            }*/
+            List<Models.Student> students = Queries.QueryStudent.getStudents(text);
+            dg.ItemsSource = students;
         }
 
         private void populateGrades()
@@ -53,12 +55,12 @@ namespace Library
         }
         private void dg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (DataRowView x in e.AddedItems)
+            foreach (Models.Student x in e.AddedItems)
             {
-                textStudentID.Text = x.Row[0].ToString();
-                textFirstName.Text = x.Row[1].ToString();
-                textLastName.Text = x.Row[2].ToString();
-                comboGrade.Text = x.Row[3].ToString();
+                textStudentID.Text = x.StudentId+"";
+                textFirstName.Text = x.FirstName;
+                textLastName.Text = x.LastName;
+                comboGrade.Text = x.Section;
             }
         }
 
@@ -67,14 +69,16 @@ namespace Library
             popTable();
             if (dg.Items.Count == 0 || checkFields())
             {
-                if (MessageBox.Show("Student does not exist in database.\nWould you like to add one now?",
-                    "Not Found!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (Queries.QueryAccounts.level == 1)
                 {
-                    Window window = new Window_AddStudent();
-                    window.Owner = Window.GetWindow(this);
-                    window.ShowDialog();
+                    if (MessageBox.Show("Student does not exist in database.\nWould you like to add one now?",
+                        "Not Found!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        Window window = new Window_AddStudent();
+                        window.Owner = Window.GetWindow(this);
+                        window.ShowDialog();
+                    }
                 }
-
             }
         }
         public void clearField()
@@ -102,6 +106,12 @@ namespace Library
             textLastName.Clear();
             comboGrade.SelectedIndex = -1;
             popTable();
+        }
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "Name")
+                e.Cancel = true;
+            Headers.DataHeaders.generateColumn(e);
         }
     }
 }

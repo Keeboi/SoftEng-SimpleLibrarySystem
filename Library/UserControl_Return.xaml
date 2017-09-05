@@ -19,7 +19,7 @@
         <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="86,122,0,0" VerticalAlignment="Top" Width="134" Click="buttonClear_Click"/>
         <Button x:Name="buttonReturn" Content="Return" HorizontalAlignment="Left" Margin="86,97,0,0" VerticalAlignment="Top" Width="134" Click="buttonReturn_Click"/>
 
-        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" IsReadOnly="True" />
+        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="True" ItemsSource="{Binding Path=returned, Mode=OneWay}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" IsReadOnly="True" AutoGeneratingColumn="OnAutoGeneratingColumn"/>
 
     </Grid>
 </UserControl>

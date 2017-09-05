@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\School\SoftEng\LibraryV0.9\Library\obj\Debug\
+C:\School\SoftEng\SRES_Library\Library\Library\obj\Debug\
 Library
 none
 false
 DEBUG;TRACE
-C:\School\SoftEng\LibraryV0.9\Library\App.xaml
-102015888625
+C:\School\SoftEng\SRES_Library\Library\Library\App.xaml
+11-264488933
 
-191970408237
+30741326719
 141546329359
-MainWindow.xaml;UserControl_Accounts.xaml;UserControl_Books.xaml;UserControl_Borrow.xaml;UserControl_Return.xaml;UserControl_Students.xaml;Window_AddBook.xaml;Window_AddStudent.xaml;Window_AddUser.xaml;Window_Login.xaml;
+MainWindow.xaml;Popups\StudentPopup.xaml;UserControl_Accounts.xaml;UserControl_Books.xaml;UserControl_Borrow.xaml;UserControl_Return.xaml;UserControl_Students.xaml;Window_AddBook.xaml;Window_AddStudent.xaml;Window_AddUser.xaml;Window_Login.xaml;
 
 False
 

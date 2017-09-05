@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +22,7 @@ namespace Library
             dg.Columns.Clear();
             dg.Items.Refresh();
 
-            DataTable dt = Queries.QueryBorrow.getBooks();
+            /*DataTable dt = Queries.QueryBorrow.getBooks();
 
             if (dt != null) // table is a DataTable
             {
@@ -35,8 +36,10 @@ namespace Library
                       });
                 }
                 dg.DataContext = dt;
-            }
-            
+            }*/
+            List<Models.BorrowedItem> borrowedItem = Queries.QueryBorrow.getBooks();
+            dg.ItemsSource = borrowedItem;
+
         }
 
         private void buttonValidate_Click(object sender, RoutedEventArgs e)
@@ -45,18 +48,18 @@ namespace Library
             {
                 string studentID = textStudentID.Text;
                 string bookID = textBookID.Text;
-                string[] info = Queries.QueryBorrow.getInfo(bookID, studentID);
-                if (info != null)
-                {
-                    textTitle.Text = info[0];
-                    comboAuthor.Text = info[1];
-                    textYear.Text = info[2];
-                    textQuantity.Text = info[3];
-                    textComments.Text = info[4];
-                    textStudentName.Text = info[5];
-                    textStudentLevel.Text = info[6];
-                    textStudentSection.Text = info[7];
-                }
+                //string[] info = Queries.QueryBorrow.getInfo(bookID, studentID);
+                Models.Book book = Queries.QueryBooks.book.Find(x => x.BookID + "" == bookID);
+                Models.Student student = Queries.QueryStudent.student.Find(x => x.StudentId + "" == studentID);
+
+                textTitle.Text = book.Title;
+                comboAuthor.Text = book.Author;
+                textYear.Text = book.Year+"";
+                textQuantity.Text = book.Quantity + "";
+                textComments.Text = book.Comments;
+                textStudentName.Text = student.FirstName+" "+student.LastName;
+                textStudentLevel.Text = student.Grade+"";
+                textStudentSection.Text = student.Section;
             }
             else
                 MessageBox.Show("Please fill out all fields.", "Empty Data", MessageBoxButton.OK);
@@ -85,7 +88,8 @@ namespace Library
         {
             if (!isEmpty())
             {
-                Queries.QueryBorrow.addBorrowedBook(textBookID.Text, textStudentID.Text);
+                if (!Queries.QueryBorrow.addBorrowedBook(textBookID.Text, textStudentID.Text))
+                    MessageBox.Show("Student has fines, please pay them before borrowing.", "Fines", MessageBoxButton.OK);
                 popTable();
             }
             else
@@ -95,6 +99,13 @@ namespace Library
         {
             return textStudentID.Text == "" ||
                 textBookID.Text == "";
+        }
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "DateReturned")
+                e.Cancel = true;
+            Headers.DataHeaders.generateColumn(e);
+
         }
     }
 }

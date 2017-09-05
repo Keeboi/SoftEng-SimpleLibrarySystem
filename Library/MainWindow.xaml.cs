@@ -11,9 +11,9 @@ namespace Library
     public partial class MainWindow : Window
     {
         UserControl_Books books = new UserControl_Books();
-        UserControl_Borrow borrow = new UserControl_Borrow();
-        UserControl_Return returnB = new UserControl_Return();
         UserControl_Students students = new UserControl_Students();
+        UserControl_Return returnB = new UserControl_Return();
+        UserControl_Borrow borrow = new UserControl_Borrow();
         UserControl_Accounts accounts = new UserControl_Accounts();
 
         public MainWindow()
@@ -25,7 +25,30 @@ namespace Library
                 Application.Current.Shutdown();
             }
             resetButtonColors();
+            denyAccess();
         }
+
+        private void denyAccess()
+        {
+            int level = Queries.QueryAccounts.level;
+            // disables when the access level doesnt allow an action.
+            switch (level)
+            {
+                // student
+                case 3:
+                    buttonBorrow.IsEnabled = false;
+                    buttonReturn.IsEnabled = false;
+                    buttonAccounts.IsEnabled = false;
+                    break;
+                // aide
+                case 2:
+                    buttonAccounts.IsEnabled = false;
+                    break;
+            //buttonAccounts.IsEnabled = false;
+            }
+        
+        }
+
 
         private void buttonBooks_Click(object sender, RoutedEventArgs e)
         {

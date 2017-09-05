@@ -45,14 +45,17 @@ namespace Library
             popTable();
             if (dg.Items.Count == 0 || checkFields())
             {
-                if (MessageBox.Show("Book does not exist in database.\nWould you like to add one now?",
-                    "Not Found!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (Queries.QueryAccounts.level == 1)
                 {
-                    Window window = new Window_AddBook();
-                    window.Owner = Window.GetWindow(this);
-                    window.Closing += Window_Closing;
-                    
-                    window.ShowDialog();
+                    if (MessageBox.Show("Book does not exist in database.\nWould you like to add one now?",
+                        "Not Found!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        Window window = new Window_AddBook();
+                        window.Owner = Window.GetWindow(this);
+                        window.Closing += Window_Closing;
+
+                        window.ShowDialog();
+                    }
                 }
                         
             }
@@ -79,7 +82,7 @@ namespace Library
                 comboSection.Text,
                 textComments.Text
             };
-            DataTable dt = Queries.QueryBooks.searchBook(text);
+            /*DataTable dt = Queries.QueryBooks.searchBook(text);
             if (dt != null) // table is a DataTable
             {
                 foreach (DataColumn col in dt.Columns)
@@ -93,22 +96,24 @@ namespace Library
                 }
 
                 dg.DataContext = dt;
-            }
+            }*/
+            List<Models.Book> books = Queries.QueryBooks.searchBook(text);
+            dg.ItemsSource = books;
         }
 
         private void dg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (DataRowView x in e.AddedItems)
+            foreach (Models.Book x in e.AddedItems)
             {
-                textBookID.Text = x.Row[0].ToString();
-                textTitle.Text = x.Row[1].ToString();
-                comboAuthor.Text = x.Row[2].ToString();
-                textYear.Text = x.Row[3].ToString();
-                textQuantity.Text = x.Row[7].ToString();
-                textPages.Text = x.Row[4].ToString();
-                comboCategory.Text = x.Row[5].ToString();
-                comboSection.Text = x.Row[6].ToString();
-                textComments.Text = x.Row[8].ToString();
+                textBookID.Text = x.BookID+"";
+                textTitle.Text = x.Title;
+                comboAuthor.Text = x.Author;
+                textYear.Text = x.Year + "";
+                textQuantity.Text = x.Quantity + "";
+                textPages.Text = x.Pages + "";
+                comboCategory.Text = x.Category + "";
+                comboSection.Text = x.Section + "";
+                textComments.Text = x.Comments + "";
             }
         }
         public void clearField()
@@ -149,6 +154,9 @@ namespace Library
             populateCategories();
             populateSections();
         }
-        
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            Headers.DataHeaders.generateColumn(e);
+        }
     }
 }

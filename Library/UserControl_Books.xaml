@@ -33,7 +33,7 @@
         <ComboBox x:Name="comboSection" HorizontalAlignment="Left" Margin="72,227,0,0" VerticalAlignment="Top" Width="150" Height="26" IsEditable="True" VerticalContentAlignment="Center"/>
         <Label Content="Comments" HorizontalAlignment="Left" Margin="0,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.373,0.423" Height="26" Width="67"/>
         <TextBox x:Name="textComments" HorizontalAlignment="Left" Height="100" Margin="72,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
-        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" SelectionChanged="dg_SelectionChanged" IsReadOnly="True" />
+        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="True" ItemsSource="{Binding Path=books, Mode=OneWay}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" SelectionChanged="dg_SelectionChanged" IsReadOnly="True" AutoGeneratingColumn="OnAutoGeneratingColumn"/>
         <Button x:Name="buttonSearchAdd" Content="Search / Add" HorizontalAlignment="Left" Margin="72,363,0,0" VerticalAlignment="Top" Width="150" Height="20" Click="buttonSearchAdd_Click"/>
         <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="72,388,0,0" VerticalAlignment="Top" Width="150" Height="20" Click="buttonClear_Click"/>
     </Grid>

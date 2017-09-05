@@ -6,13 +6,15 @@ namespace Library.Queries
 {
     class QueryStudent
     {
-        public static System.Data.DataTable getStudents(params string[] inputs)
+        public static List<Models.Student> student;
+        public static List<Models.Student> getStudents(params string[] inputs)
         {
             SqlConnector sql = new SqlConnector("localhost", 3306, "root", "", "db_library");
             sql.openConnection();
-            string query = String.Format("select student_id as \"Student ID\", " +
-                "student_fname as \"Student First Name\", " +
-                "student_lname as \"Student Last Name\", " +
+            string query = String.Format("select student_id as \"StudentId\", " +
+                "student_fname as \"FirstName\", " +
+                "student_lname as \"LastName\", " +
+                "tblgrades.grade as Grade, " +
                 "tblgrades.student_section as Section from tblstudents " +
                 "join tblgrades on tblstudents.grade_id = tblgrades.grade_id " +
                 "where student_id like '{0}%' and " +
@@ -21,7 +23,10 @@ namespace Library.Queries
                 "tblgrades.student_section like '{3}%' " +
                 "order by student_id asc;",
                 inputs[0], inputs[1], inputs[2], inputs[3]);
-            return sql.getData(query);
+            System.Data.DataTable dt = sql.getData(query);
+            List<Models.Student> students = Models.DataToList.TransformTableToList<Models.Student>(dt);
+            student = students;
+            return students;
         }
         public static void addStudent(params string[] inputs)
         {
@@ -36,8 +41,9 @@ namespace Library.Queries
         }
         public static List<string> getSection()
         {
-            string query = "select student_section from tblgrades";
-            return getList(query);
+            /*string query = "select student_section from tblgrades";
+            return getList(query);*/
+            return student.Select(S => S.Section).Distinct().ToList();
         }
         private static List<string> getList(string query)
         {

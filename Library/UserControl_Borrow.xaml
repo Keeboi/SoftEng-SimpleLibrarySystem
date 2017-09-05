@@ -26,7 +26,7 @@
         <Label Content="Comments" HorizontalAlignment="Left" Margin="5,221,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.373,0.423" Height="26" Width="70"/>
         <TextBox x:Name="textComments" HorizontalAlignment="Left" Height="100" Margin="80,221,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" IsEnabled="False"/>
 
-        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" IsReadOnly="True" />
+        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="True" ItemsSource="{Binding Path=borrowed, Mode=OneWay}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" IsReadOnly="True" AutoGeneratingColumn="OnAutoGeneratingColumn"/>
 
         <Label Content="Name" HorizontalAlignment="Left" Margin="31,328,0,0" VerticalAlignment="Top" Height="26" Width="44"/>
         <TextBox x:Name="textStudentName" HorizontalAlignment="Left" Height="26" Margin="80,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" VerticalContentAlignment="Center" IsEnabled="False"/>

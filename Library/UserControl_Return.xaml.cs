@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,7 +21,7 @@ namespace Library
             dg.Columns.Clear();
             dg.Items.Refresh();
 
-            DataTable dt = Queries.QueryReturn.getBooks("","");
+            /*DataTable dt = Queries.QueryReturn.getBooks("","");
 
             if (dt != null) // table is a DataTable
             {
@@ -34,7 +35,9 @@ namespace Library
                       });
                 }
                 dg.DataContext = dt;
-            }
+            }*/
+            List<Models.BorrowedItem> borrowedItem = Queries.QueryReturn.getBooks("","");
+            dg.ItemsSource = borrowedItem;
         }
 
         private void buttonSearch_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -47,7 +50,7 @@ namespace Library
                 textBookID.Text,
                 textStudentID.Text
             };
-            DataTable dt = Queries.QueryReturn.getBooks(text);
+            /*DataTable dt = Queries.QueryReturn.getBooks(text);
 
             if (dt != null) // table is a DataTable
             {
@@ -61,7 +64,9 @@ namespace Library
                       });
                 }
                 dg.DataContext = dt;
-            }
+            }*/
+            List<Models.BorrowedItem> borrowedItem = Queries.QueryReturn.getBooks(text);
+            dg.ItemsSource = borrowedItem;
         }
 
         private void buttonReturn_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -90,6 +95,14 @@ namespace Library
         private bool isEmpty()
         {
             return textStudentID.Text == "" || textBookID.Text == "";
+        }
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            System.Console.WriteLine(e.Column.Header);
+            if ((string)e.Column.Header == "DateReturned")
+                e.Cancel = true;
+            Headers.DataHeaders.generateColumn(e);
+
         }
     }
 }

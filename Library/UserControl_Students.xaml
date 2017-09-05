@@ -24,6 +24,6 @@
         <Button x:Name="buttonSearchAdd" Content="Search / Add" HorizontalAlignment="Left" Margin="97,165,0,0" VerticalAlignment="Top" Width="150" Height="20" Click="buttonSearchAdd_Click"/>
         <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="97,190,0,0" VerticalAlignment="Top" Width="150" Height="20" Click="buttonClear_Click"/>
 
-        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" SelectionChanged="dg_SelectionChanged" IsReadOnly="True" />
+        <DataGrid x:Name="dg" Margin="10" Grid.Column="1" AutoGenerateColumns="True" ItemsSource="{Binding Path=students, Mode=OneWay}" CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserReorderColumns="False" EnableRowVirtualization="False" HeadersVisibility="Column" ColumnWidth="*" SelectionChanged="dg_SelectionChanged" IsReadOnly="True" AutoGeneratingColumn="OnAutoGeneratingColumn"/>
     </Grid>
 </UserControl>

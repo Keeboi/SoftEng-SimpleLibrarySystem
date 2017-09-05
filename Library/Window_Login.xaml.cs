@@ -22,18 +22,37 @@ namespace Library
         public Window_Login()
         {
             InitializeComponent();
+            Queries.QueryPopulate.populate();
         }
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (textUsername.Text == "admin" && textPassword.Password.ToString() == "admin")
+            SqlConnector cn = new SqlConnector("localhost", 3306, "root", "", "db_library");
+            Dictionary<string, string> login = Queries.QueryAccounts.loginUser(textUsername.Text, textPassword.Password.ToString());
+            if (login != null)
             {
-                MainWindow main = new MainWindow();
-                main.Show();
-                Close();
+                if (textUsername.Text == login.Keys.First() && textPassword.Password.ToString() == login.Values.First())
+                {
+                    if (cn.openConnection())
+                    {
+                        MainWindow main = new MainWindow();
+                        main.Show();
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not connect to the database!", "Connection Error", MessageBoxButton.OK);
+                    }
+                }
             }
             else
                 MessageBox.Show("Username or password doesn't exist.\nPlease contact administrator or librarian for registration.", "Invalid Login!", MessageBoxButton.OK);
+        }
+
+        private void buttonClear_Click(object sender, RoutedEventArgs e)
+        {
+            textUsername.Text = "";
+            textPassword.Password = "";
         }
     }
 }

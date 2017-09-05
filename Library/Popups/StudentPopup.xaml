@@ -1,0 +1,16 @@
+﻿<Window x:Class="Library.Popups.StudentPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library.Popups"
+        mc:Ignorable="d"
+        Title="StudentPopup" Height="300" Width="591">
+    <Grid>
+        <Label x:Name="labelName" Content="Student Name&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontSize="36"/>
+        <Label x:Name="labelGrade" Content="Grade &amp; Section&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,57,0,0" FontSize="20"/>
+        <Label x:Name="labelID" Content="Student ID&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,4,0,0" FontSize="16"/>
+        <DataGrid x:Name="dgBooks" HorizontalAlignment="Left" Height="153" VerticalAlignment="Top" Width="583" Margin="0,116,0,0"/>
+
+    </Grid>
+</Window>

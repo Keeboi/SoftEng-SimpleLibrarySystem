@@ -8,12 +8,15 @@ namespace Library.Queries
 {
     class QueryBooks
     {
-        public static System.Data.DataTable searchBook(params string[] inputs)
+        public static List<Models.Book> book;
+
+        public static List<Models.Book> searchBook(params string[] inputs)
         {
             SqlConnector sql = new SqlConnector("localhost", 3306, "root", "", "db_library");
             sql.openConnection();
+            #region Book Query
             string query = String.Format("select " +
-                " tblbooks.book_id as \"Book ID\"," +
+                " tblbooks.book_id as \"BookID\"," +
                 "title as Title, " +
                 "concat(tblauthors.author_fname, \" \", tblauthors.author_lname) as Author," +
                 "year as Year," +
@@ -21,6 +24,7 @@ namespace Library.Queries
                 "tblcategories.category as Category," +
                 "tblbooksection.section as Section," +
                 "quantity as Quantity," +
+                "available_books as Available," +
                 "comments as Comments " +
                 "from tblbooks " +
                 "inner join tblauthors on " +
@@ -43,21 +47,15 @@ namespace Library.Queries
                 " order by book_id asc",
                 inputs[0], inputs[1], inputs[2], inputs[3], inputs[4],
                 inputs[5], inputs[6], inputs[7], inputs[8]);
+            #endregion
             Console.WriteLine(query);
-            return sql.getData(query);
+            System.Data.DataTable dt = sql.getData(query);
+            List<Models.Book> books = Models.DataToList.TransformTableToList<Models.Book>(dt);
+            book = books;
+            return books;
         }
         public static void addBook(params string[] inputs)
         {
-            //0 = textBookID
-            //1 = textTitle
-            //3 = comboAuthor
-            //4 = textYear
-            //5 = textQuantity
-            //6 = textQuantity
-            //7 = textPages
-            //8 = comboCategory
-            //9 = comboSection
-            //10 = textComments
             SqlConnector sql = new SqlConnector("localhost", 3306, "root", "", "db_library");
             sql.openConnection();
             
@@ -111,21 +109,24 @@ namespace Library.Queries
         }
         public static List<string> getAuthors()
         {
-            string query = "select concat(author_fname, \" \", author_lname) from tblauthors";
-            return getList(query);
+            /*string query = "select concat(author_fname, \" \", author_lname) from tblauthors";
+            return getList(query);*/
+            return book.Select(A => A.Author).Distinct().ToList();
         }
         public static List<string> getCategories()
         {
-            string query = "select category from tblcategories";
-            return getList(query);
+            /*string query = "select category from tblcategories";
+            return getList(query);*/
+            return book.Select(C => C.Category).Distinct().ToList();
         }
         public static List<string> getSections()
         {
-            string query = "select section from tblbooksection";
-            return getList(query);
+            /*string query = "select section from tblbooksection";
+            return getList(query);*/
+            return book.Select(S => S.Section).Distinct().ToList();
         }
 
-        private static List<string> getList(string query)
+        /*private static List<string> getList(string query)
         {
             SqlConnector sql = new SqlConnector("localhost", 3306, "root", "", "db_library");
             sql.openConnection();
@@ -138,31 +139,27 @@ namespace Library.Queries
                 return woh;
             }
             return new List<string>();
-        }
+        }*/
         private static bool checkAvailableAuthor(string authorName)
         {
-            string query = "select author_fname from tblauthors where author_fname like '" + 
-                authorName.Split(' ')[0]+"%' or author_lname like '"+
-                authorName.Split(' ').Last()+"%'";
-            if (getList(query).ToArray().Length == 0)
-                return false;
-            return true;
+            foreach (string s in getAuthors())
+                if (s == authorName)
+                    return true;
+            return false;
         }
         private static bool checkAvailableSection(string section)
         {
-            string query = "select section from tblbooksection where section like '" +
-                section + "%'";
-            if (getList(query).ToArray().Length == 0)
-                return false;
-            return true;
+            foreach (string s in getSections())
+                if (s == section)
+                    return true;
+            return false;
         }
         private static bool checkAvailableCategory(string category)
         {
-            string query = "select category from tblcategories where category like '" +
-                category + "%'";
-            if (getList(query).ToArray().Length == 0)
-                return false;
-            return true;
+            foreach (string s in getCategories())
+                if (s == category)
+                    return true;
+            return false;
         }
     }
 }

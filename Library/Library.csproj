@@ -56,8 +56,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Connector.cs" />
+    <Compile Include="Date\DateCheck.cs" />
+    <Compile Include="Headers\DataHeaders.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BorrowedItem.cs" />
+    <Compile Include="Models\DataToList.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Popups\StudentPopup.xaml.cs">
+      <DependentUpon>StudentPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Queries\QueryBooks.cs" />
     <Compile Include="Queries\QueryBorrow.cs" />
+    <Compile Include="Queries\QueryAccounts.cs" />
+    <Compile Include="Queries\QueryFines.cs" />
+    <Compile Include="Queries\QueryPopulate.cs" />
     <Compile Include="Queries\QueryReturn.cs" />
     <Compile Include="Queries\QueryStudent.cs" />
     <Compile Include="UserControl_Accounts.xaml.cs">
@@ -99,6 +112,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Popups\StudentPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControl_Accounts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
